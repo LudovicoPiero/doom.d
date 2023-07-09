@@ -5,12 +5,26 @@
 (setq user-full-name "Ludovico Piero"
       user-mail-address "ludovicopiero@pm.me")
 
-(setq doom-font (font-spec :family "Iosevka Comfy" :size 15 :weight 'medium :slant 'normal)
-      doom-variable-pitch-font (font-spec :family "Iosevka Comfy" :size 15 :weight 'medium :slant 'normal)
-      doom-big-font (font-spec :family "Iosevka Comfy" :size 20))
+(setq doom-font (font-spec :family "Iosevka q" :size 15 :weight 'medium :slant 'normal)
+      doom-variable-pitch-font (font-spec :family "Iosevka q" :size 15 :weight 'medium :slant 'normal)
+      doom-big-font (font-spec :family "Iosevka q" :size 20))
 (after! doom-themes
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t))
+
+(setq shell-file-name "/home/ludovico/.nix-profile/bin/fish"
+      vterm-max-scrollback 5000)
+(setq eshell-history-size 5000
+      eshell-buffer-maximum-lines 5000
+      eshell-hist-ignoredups t
+      eshell-scroll-to-bottom-on-input t
+      eshell-destroy-buffer-when-process-dies t
+      eshell-visual-commands'("bash" "fish" "htop" "ssh" "top" "zsh"))
+(map! :leader
+      :desc "Eshell"                 "e s" #'eshell
+      :desc "Eshell popup toggle"    "e t" #'+eshell/toggle
+      :desc "Counsel eshell history" "e h" #'counsel-esh-history
+      :desc "Vterm popup toggle"     "v t" #'+vterm/toggle)
 
 ;; Default spelling dictionary is English
 (setq ispell-dictionary "english")
@@ -85,22 +99,22 @@
 (setq treemacs-width 30)
 
 ;; Copilot
-(use-package! copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (("C-TAB" . 'copilot-accept-completion-by-word)
-         ("C-<tab>" . 'copilot-accept-completion-by-word)
-         :map copilot-completion-map
-         ("<tab>" . 'copilot-accept-completion)
-         ("TAB" . 'copilot-accept-completion)))
+;; (use-package! copilot
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (("C-TAB" . 'copilot-accept-completion-by-word)
+;;          ("C-<tab>" . 'copilot-accept-completion-by-word)
+;;          :map copilot-completion-map
+;;          ("<tab>" . 'copilot-accept-completion)
+;;          ("TAB" . 'copilot-accept-completion)))
 
 ;; remap ; to :
 (map! :map evil-normal-state-map
       ";" #'evil-ex)
 
 ;; Remove q macro keybind
-(map! :map evil-normal-state-map
-      "q" nil
-      "1" #'evil-execute-macro)
+;; (map! :map evil-normal-state-map
+;;       "q" nil
+;;       "1" #'evil-execute-macro)
 
 ;; lang:: cc
 ;; Set CC lsp server to clangd
@@ -114,13 +128,15 @@
           "--header-insertion-decorators=0"))
   (set-lsp-priority! 'clangd 2))
 
+;; Elcord
+(elcord-mode)
+(setq elcord-quiet t) ;; Make elcord shut up
+(setq elcord-editor-icon 'doom_cute_icon)
+
+
 ;; This gonna disable auto comment when pressing `Enter`
 ;; (setq +default-want-RET-continue-comments nil)
 ;; (setq +evil-want-o/O-to-continue-comments nil)
-
-;; Elcord
-;; (elcord-mode)
-;; (setq elcord-quiet t) ;; Make elcord shut up
 
 ;; (provide 'config)
 ;;; config.el ends here

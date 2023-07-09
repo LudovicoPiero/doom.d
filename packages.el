@@ -11,11 +11,11 @@
 (package! yuck-mode)
 (package! elcord)
 
-;; Copilot
-(package! copilot
-  :recipe (:host github
-           :repo "zerolfx/copilot.el"
-           :files ("*.el" "dist")))
+;; ;; Copilot
+;; (package! copilot
+;;   :recipe (:host github
+;;            :repo "zerolfx/copilot.el"
+;;            :files ("*.el" "dist")))
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
