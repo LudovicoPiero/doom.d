@@ -45,10 +45,10 @@
 ;; Set nix lsp to nixd
 (with-eval-after-load 'lsp-mode
   (lsp-register-client
-    (make-lsp-client :new-connection (lsp-stdio-connection "nixd")
-                     :major-modes '(nix-mode)
-                     :priority 0
-                     :server-id 'nixd)))
+   (make-lsp-client :new-connection (lsp-stdio-connection "nixd")
+                    :major-modes '(nix-mode)
+                    :priority 0
+                    :server-id 'nixd)))
 
 ;; Focus new window after splitting
 (setq evil-split-window-below t
@@ -60,8 +60,9 @@
         lsp-enable-suggest-server-download nil))
 
 (after! lsp-ui
-  (setq lsp-ui-sideline-enable nil
-        lsp-ui-doc-enable nil))
+  (setq lsp-ui-sideline-enable t
+        lsp-ui-doc-enable t
+        lsp-headerline-breadcrumb-enable nil))
 
 ;; Magit Config
 (setq magit-openpgp-default-signing-key "3911DD276CFE779C"
@@ -82,9 +83,32 @@
       ";" #'evil-ex)
 
 ;; Elcord
-(elcord-mode)
-(setq elcord-quiet t) ;; Make elcord shut up
-;; (setq elcord-editor-icon 'doom_cute_icon)
+(use-package! elcord
+  :config
+  (elcord-mode)
+  (setq elcord-quiet t) ;; Make elcord shut up
+  (setq elcord-editor-icon "doom_cute_icon"))
+
+;; :lang cc
+(after! lsp-clangd
+  (setq lsp-clients-clangd-args
+        '("--background-index"
+          "--clang-tidy"
+          "--completion-style=detailed"
+          "--header-insertion=never"
+          "--header-insertion-decorators=0"))
+  (set-lsp-priority! 'clangd 2))
+
+;; Use Relative Numbers
+(setq display-line-numbers-type 'relative)
+
+;; Center cursor mode
+(use-package! centered-cursor-mode
+  :config
+  (global-centered-cursor-mode))
+
+;; Don't continue comment when pressing o or O
+(setq +evil-want-o/O-to-continue-comments nil)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.

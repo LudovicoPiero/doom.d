@@ -8,6 +8,7 @@
 ;; (package! some-package)
 (package! org-modern)
 (package! elcord)
+(package! centered-cursor-mode)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
